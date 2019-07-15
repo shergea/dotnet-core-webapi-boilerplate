@@ -60,7 +60,6 @@ namespace WebApi
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddNLog();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

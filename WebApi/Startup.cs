@@ -13,6 +13,10 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 using NLog.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Model.Models;
+using Microsoft.EntityFrameworkCore.Design;
+using System.IO;
 
 namespace WebApi
 {
@@ -29,6 +33,11 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<MsSQLContext>(options => options.UseSqlServer(connection));
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -77,6 +86,50 @@ namespace WebApi
 
             //app.UseHttpsRedirection();
             app.UseMvc();
+            SeedData.Initialize(app.ApplicationServices);
+        }
+
+
+        /*public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MsSQLContext>
+        {
+            public MsSQLContext CreateDbContext(string[] args)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+                var builder = new DbContextOptionsBuilder<MsSQLContext>();
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                builder.UseSqlServer(connectionString);
+                return new MsSQLContext(builder.Options);
+            }
+        }*/
+
+
+        
+
+        
+    }
+
+    public static class SeedData
+    {
+        public static void Initialize(IServiceProvider serviceProvider)
+        {
+            using (var serviceScope = serviceProvider.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<MsSQLContext>();
+
+                // auto migration
+                context.Database.Migrate();
+
+                // Seed the database.
+                InitializeUserAndRoles(context);
+            }
+        }
+
+        private static void InitializeUserAndRoles(MsSQLContext context)
+        {
+            // init user and roles  
         }
     }
 }

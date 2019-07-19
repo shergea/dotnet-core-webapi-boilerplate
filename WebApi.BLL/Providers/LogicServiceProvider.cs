@@ -8,6 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection {
         {
             services.AddTransient<IUserLogic, UserLogic>();
             services.AddTransient<IAuthLogic, AuthLogic>();
+            services.AddTransient<IRefreshTokenLogic, RefreshTokenLogic>();
             return services;
         }
     }

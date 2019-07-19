@@ -6,5 +6,6 @@ namespace WebApi.DAL.Repositories.Interfaces
     {
         void Save();
         IUserRepository User { get; }
+        IRefreshTokenRepository RefreshToken { get; }
     }
 }

@@ -12,6 +12,7 @@ namespace WebApi.DAL.Repositories
         }
         
         private UserRepository userRepository;
+        private RefreshTokenRepository refreshTokenRepository;
 
         public IUserRepository User
         {
@@ -23,6 +24,19 @@ namespace WebApi.DAL.Repositories
                     this.userRepository = new UserRepository(context);
                 }
                 return userRepository;
+            }
+        }
+
+        public IRefreshTokenRepository RefreshToken
+        {
+            get
+            {
+
+                if (this.refreshTokenRepository == null)
+                {
+                    this.refreshTokenRepository = new RefreshTokenRepository(context);
+                }
+                return refreshTokenRepository;
             }
         }
 

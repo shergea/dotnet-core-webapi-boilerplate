@@ -18,12 +18,12 @@ namespace WebApi.BLL.Logics
         }
         public IEnumerable<User> Get()
         {
-            return this.unitOfWork.User.GetAsNoTracking();
+            return this._unitOfWork.User.GetAsNoTracking();
         }
 
         public GetOutputViewModel GetFirst()
         {
-            return this._mapper.Map<GetOutputViewModel>(this.unitOfWork.User.GetAsNoTracking().First());
+            return this._mapper.Map<GetOutputViewModel>(this._unitOfWork.User.GetAsNoTracking().First());
         }
 
         public RegisterOutputViewModel Register(RegisterInputViewModel entity)

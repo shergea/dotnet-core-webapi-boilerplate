@@ -16,7 +16,7 @@ namespace WebApi.BLL.Logics
 
         public User Authenticate(PostLoginInputViewModel entity)
         {
-            return unitOfWork.User.GetFirstAsNoTracking(x => x.Email == entity.Email && x.Password == CryptologyFuncs.Hash(entity.Password));
+            return this._unitOfWork.User.GetFirstAsNoTracking(x => x.Email == entity.Email && x.Password == CryptologyFuncs.Hash(entity.Password));
         }
     }
 }

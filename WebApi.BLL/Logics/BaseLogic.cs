@@ -14,21 +14,6 @@ namespace WebApi.BLL.Logics
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
         }
-
-        public IUnitOfWork unitOfWork
-        {
-            get
-            {
-                return _unitOfWork;
-            }
-        }
-
-        public IMapper mapper
-        {
-            get
-            {
-                return _mapper;
-            }
-        }
     }
+    
 }

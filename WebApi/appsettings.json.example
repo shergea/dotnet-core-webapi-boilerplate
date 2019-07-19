@@ -1,0 +1,15 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=DESKTOP-NE3COAA\\SQLEXPRESS;Database=testdb;Trusted_Connection=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Trace",
+      "Microsoft": "Information"
+    }
+  },
+  "Jwt": {
+    "Key": "some_big_key_value_here_secret",
+    "Issuer": "http://localhost:5000/"
+  }
+}

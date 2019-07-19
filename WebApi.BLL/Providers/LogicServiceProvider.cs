@@ -7,6 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection {
         public static IServiceCollection RegisterLogicLayer(this IServiceCollection services)
         {
             services.AddTransient<IUserLogic, UserLogic>();
+            services.AddTransient<IAuthLogic, AuthLogic>();
             return services;
         }
     }

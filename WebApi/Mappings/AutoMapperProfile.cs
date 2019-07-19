@@ -8,6 +8,7 @@ namespace AutoMapper.Mappings
         public AutoMapperProfile()
         {
             CreateMap<User, GetOutputViewModel>().ReverseMap();
+            CreateMap<User, RegisterOutputViewModel>().ReverseMap();
         }
     }
 }

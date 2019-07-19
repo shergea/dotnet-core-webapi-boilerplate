@@ -46,6 +46,34 @@ namespace WebApi.DAL.Repositories
             }
         }
 
+        public virtual TEntity GetFirst(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).FirstOrDefault();
+            }
+            else
+            {
+                return query.FirstOrDefault();
+            }
+        }
+
         public virtual IEnumerable<TEntity> GetAsNoTracking(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -71,6 +99,34 @@ namespace WebApi.DAL.Repositories
             else
             {
                 return query.ToList();
+            }
+        }
+
+        public virtual TEntity GetFirstAsNoTracking(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<TEntity> query = dbSet.AsNoTracking();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).FirstOrDefault();
+            }
+            else
+            {
+                return query.FirstOrDefault();
             }
         }
 

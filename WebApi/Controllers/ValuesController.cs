@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApi.BLL.Logics.Interfaces;
-using WebApi.DAL.Repositories.Interfaces;
 using WebApi.Model;
 using WebApi.Model.ViewModels.UserController;
 
@@ -14,21 +10,22 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : BaseController
     {
         private readonly ILogger<ValuesController> _logger;
-        private readonly IUserLogic _userLogic;
 
-        public ValuesController(ILogger<ValuesController> logger,IUserLogic userLogic)
+        public ValuesController(IUserLogic userLogic,ILogger<ValuesController> logger) : base(userLogic)
         {
-            _logger=logger;
-            _userLogic=userLogic;
+            _logger = logger;
         }
         // GET api/values
-        [HttpGet]
+        [HttpGet, Authorize]
         public GetOutputViewModel Get()
         {
-            GetOutputViewModel a =_userLogic.GetFirst();
+            //var currentUser = HttpContext.User;
+            //currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value
+            User aaa = this.User;
+            GetOutputViewModel a = userLogic.GetFirst();
             return a;
         }
 

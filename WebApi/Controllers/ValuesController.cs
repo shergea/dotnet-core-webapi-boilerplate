@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApi.BLL.Logics.Interfaces;
 using WebApi.DAL.Repositories.Interfaces;
 using WebApi.Model;
+using WebApi.Model.ViewModels.UserController;
 
 namespace WebApi.Controllers
 {
@@ -24,9 +26,10 @@ namespace WebApi.Controllers
         }
         // GET api/values
         [HttpGet]
-        public IEnumerable<User> Get()
+        public GetOutputViewModel Get()
         {
-            return _userLogic.Get();
+            GetOutputViewModel a =_userLogic.GetFirst();
+            return a;
         }
 
         // GET api/values/5

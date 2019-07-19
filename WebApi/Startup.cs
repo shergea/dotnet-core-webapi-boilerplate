@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System.IO;
 using WebApi.DAL;
+using AutoMapper;
 
 namespace WebApi
 {
@@ -36,6 +37,7 @@ namespace WebApi
             services.AddSingleton<IConfiguration>(Configuration);
             services.RegisterUnitOfWorkLayer();
             services.RegisterLogicLayer();
+            services.AddAutoMapper(typeof(Startup));
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MsSQLContext>(options => options.UseSqlServer(connection));

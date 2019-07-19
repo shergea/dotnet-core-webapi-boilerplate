@@ -59,7 +59,7 @@ namespace WebApi.Controllers
         {
             var principal = GetPrincipalFromExpiredToken(token);
             Guid userId = new Guid(principal.Claims.FirstOrDefault(c => c.Type == "UserId").Value.ToString());
-            RefreshToken savedRefreshToken = _refreshTokenLogic.GetByToken(userId, refreshToken); //retrieve the refresh token from a data store
+            RefreshToken savedRefreshToken = _refreshTokenLogic.GetByToken(userId, refreshToken);
             if (savedRefreshToken == null)
                 return Unauthorized();
 
@@ -76,12 +76,21 @@ namespace WebApi.Controllers
 
         private string BuildToken(User user = null, IEnumerable<Claim> claims = null)
         {
+            IEnumerable<Claim> _claims=null;
             if (user != null)
             {
-                claims = new[] {
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                _claims = new[] {
+                    new Claim("Email", user.Email),
                     new Claim("UserId", user.Id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new Claim("Jti", Guid.NewGuid().ToString())
+                };
+            }
+            if (claims != null)
+            {
+                _claims = new[] {
+                    new Claim("Email", claims.FirstOrDefault(x=>x.Type=="Email").Value.ToString()),
+                    new Claim("UserId", claims.FirstOrDefault(x=>x.Type=="UserId").Value.ToString()),
+                    new Claim("Jti", Guid.NewGuid().ToString())
                 };
             }
 
@@ -90,7 +99,7 @@ namespace WebApi.Controllers
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
-                claims,
+                _claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
 

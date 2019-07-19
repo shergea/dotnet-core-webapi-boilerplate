@@ -11,5 +11,10 @@ namespace WebApi.DAL.Repositories
         public UserRepository(MsSQLContext context) : base(context)
         {
         }
+
+        public User GetForLogin(string email, string password)
+        {
+            return context.Users.AsNoTracking().Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+        }
     }
 }

@@ -15,5 +15,4 @@ namespace WebApi.BLL.Logics
             this._mapper = mapper;
         }
     }
-    
 }

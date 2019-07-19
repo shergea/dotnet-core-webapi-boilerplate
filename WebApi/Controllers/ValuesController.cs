@@ -33,6 +33,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+            userLogic.GetTest();
             return "value";
         }
 

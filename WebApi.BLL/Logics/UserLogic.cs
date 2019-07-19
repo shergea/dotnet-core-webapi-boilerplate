@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using WebApi.BLL.Funcs;
 using WebApi.BLL.Logics.Interfaces;
@@ -44,6 +45,16 @@ namespace WebApi.BLL.Logics
         public User GetById(Guid Id)
         {
             return _unitOfWork.User.GetByIDAsNoTracking(Id);
+        }
+
+        public void GetTest()
+        {
+            var task1 = _unitOfWork.RefreshToken.GetAsNoTrackingAsync();
+            var task2 = _unitOfWork.User.GetAsNoTrackingAsync();
+            Task.WaitAll(task1, task2);
+            var result1 = task1.Result;
+            var result2 = task2.Result;
+            
         }
     }
 }

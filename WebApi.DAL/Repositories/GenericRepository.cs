@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApi.DAL.Repositories.Interfaces;
 
@@ -17,8 +18,8 @@ namespace WebApi.DAL.Repositories
             this.context = context;
             this.dbSet = context.Set<TEntity>();
         }
-
-        public virtual IEnumerable<TEntity> Get(
+        #region Disabled
+        /* public virtual IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
@@ -129,10 +130,42 @@ namespace WebApi.DAL.Repositories
                 return query.FirstOrDefault();
             }
         }
+        */
+        #endregion
+
+        public virtual async Task<IEnumerable<TEntity>> GetAsync()
+        {
+            return await dbSet.ToListAsync();
+        }
+        public virtual IEnumerable<TEntity> Get()
+        {
+            return dbSet.ToList();
+        }
+        public virtual async Task<IEnumerable<TEntity>> GetAsNoTrackingAsync()
+        {
+            return await dbSet.AsNoTracking().ToListAsync();
+        }
+
+        public virtual IEnumerable<TEntity> GetAsNoTracking()
+        {
+            return dbSet.AsNoTracking().ToList();
+        }
+
+        public virtual async Task<TEntity> GetByIDAsync(object id)
+        {
+            return await dbSet.FindAsync(id);
+        }
 
         public virtual TEntity GetByID(object id)
         {
             return dbSet.Find(id);
+        }
+
+        public virtual async Task<TEntity> GetByIDAsNoTrackingAsync(object id)
+        {
+            var entity = await dbSet.FindAsync(id);
+            context.Entry(entity).State = EntityState.Detached;
+            return entity;
         }
 
         public virtual TEntity GetByIDAsNoTracking(object id)

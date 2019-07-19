@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using WebApi.DAL.Repositories.Interfaces;
 using WebApi.Model;
 
@@ -10,6 +9,11 @@ namespace WebApi.DAL.Repositories
     {
         public RefreshTokenRepository(MsSQLContext context) : base(context)
         {
+        }
+
+        public RefreshToken GetValidRefreshToken(Guid userId, string token)
+        {
+            return context.RefreshTokens.Where(x => x.UserId == userId && x.Token == token && x.ExpiredTime >= DateTime.Now).FirstOrDefault();
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
-using WebApi.BLL.Funcs;
 using WebApi.BLL.Logics.Interfaces;
 using WebApi.DAL.Repositories.Interfaces;
 using WebApi.Model;
-using WebApi.Model.ViewModels.UserController;
 
 namespace WebApi.BLL.Logics
 {
@@ -19,14 +15,14 @@ namespace WebApi.BLL.Logics
 
         public RefreshToken GetByToken(Guid userId, string token)
         {
-            return this._unitOfWork.RefreshToken.GetFirstAsNoTracking(x => x.UserId == userId && x.Token == token && x.ExpiredTime >= DateTime.Now);
+            return this._unitOfWork.RefreshToken.GetValidRefreshToken(userId,token);
         }
 
         public RefreshToken CreateNewToken(Guid userId, string newToken, string oldToken = null)
         {
             if (oldToken != null)
             {
-                RefreshToken oldRefreshToken = this._unitOfWork.RefreshToken.GetFirstAsNoTracking(x => x.Token == oldToken);
+                RefreshToken oldRefreshToken = this._unitOfWork.RefreshToken.GetByID(oldToken);
                 this._unitOfWork.RefreshToken.Delete(oldRefreshToken);
             }
 

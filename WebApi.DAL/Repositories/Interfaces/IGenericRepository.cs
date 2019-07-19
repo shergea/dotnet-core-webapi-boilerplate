@@ -12,14 +12,23 @@ namespace WebApi.DAL.Repositories.Interfaces
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "");
 
+        IEnumerable<TEntity> GetAsNoTracking(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "");
+
         TEntity GetByID(object id);
+        TEntity GetByIDAsNoTracking(object id);
 
         void Insert(TEntity entity);
+        void InsertRange(IEnumerable<TEntity> entities);
 
         void Delete(object id);
 
         void Delete(TEntity entityToDelete);
+        void DeleteRange(IEnumerable<TEntity> entitiesToDelete);
 
         void Update(TEntity entityToUpdate);
+        void UpdateRange(IEnumerable<TEntity> entitiesToUpdate);
     }
 }

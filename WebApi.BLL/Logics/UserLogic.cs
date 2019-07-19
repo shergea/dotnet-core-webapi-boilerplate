@@ -12,7 +12,7 @@ namespace WebApi.BLL.Logics
 
         }
         public IEnumerable<User> Get(){
-            return this.unitOfWork.User.Get();
+            return this.unitOfWork.User.GetAsNoTracking();
         }
     }
 }

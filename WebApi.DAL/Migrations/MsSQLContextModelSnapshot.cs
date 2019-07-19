@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Model.Models;
+using WebApi.DAL;
 
-namespace Model.Migrations
+namespace WebApi.DAL.Migrations
 {
     [DbContext(typeof(MsSQLContext))]
-    [Migration("20190716014355_InitialCreate")]
-    partial class InitialCreate
+    partial class MsSQLContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +19,7 @@ namespace Model.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("User", b =>
+            modelBuilder.Entity("WebApi.Model.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();

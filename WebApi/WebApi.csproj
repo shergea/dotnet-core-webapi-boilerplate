@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\WebApi.Model\WebApi.Model.csproj" />
+    <ProjectReference Include="..\WebApi.BLL\WebApi.BLL.csproj" />
+    <ProjectReference Include="..\WebApi.DAL\WebApi.DAL.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-namespace Model.Models
+using WebApi.Model;
+
+namespace WebApi.DAL
 {
     public partial class MsSQLContext : DbContext
     {

@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebApi.Model\WebApi.Model.csproj" />
+  </ItemGroup>
+
 </Project>

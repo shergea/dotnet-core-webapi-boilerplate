@@ -14,9 +14,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 using NLog.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Model.Models;
 using Microsoft.EntityFrameworkCore.Design;
 using System.IO;
+using WebApi.DAL;
 
 namespace WebApi
 {
@@ -33,6 +33,9 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.RegisterUnitOfWorkLayer();
+            services.RegisterLogicLayer();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MsSQLContext>(options => options.UseSqlServer(connection));
@@ -86,29 +89,9 @@ namespace WebApi
 
             //app.UseHttpsRedirection();
             app.UseMvc();
+
             SeedData.Initialize(app.ApplicationServices);
         }
-
-
-        /*public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MsSQLContext>
-        {
-            public MsSQLContext CreateDbContext(string[] args)
-            {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-                var builder = new DbContextOptionsBuilder<MsSQLContext>();
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
-                builder.UseSqlServer(connectionString);
-                return new MsSQLContext(builder.Options);
-            }
-        }*/
-
-
-        
-
-        
     }
 
     public static class SeedData

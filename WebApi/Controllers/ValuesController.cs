@@ -4,27 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebApi.BLL.Logics.Interfaces;
+using WebApi.DAL.Repositories.Interfaces;
+using WebApi.Model;
 
 namespace WebApi.Controllers
 {
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         private readonly ILogger<ValuesController> _logger;
+        private readonly IUserLogic _userLogic;
 
-        public ValuesController(ILogger<ValuesController> logger)
+        public ValuesController(ILogger<ValuesController> logger,IUserLogic userLogic)
         {
             _logger=logger;
+            _userLogic=userLogic;
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IEnumerable<User> Get()
         {
-            _logger.LogInformation("Index page says hello");
-            return new string[] { "value1", "value2" };
+            return _userLogic.Get();
         }
 
         // GET api/values/5

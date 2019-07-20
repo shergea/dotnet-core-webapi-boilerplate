@@ -1,2 +1,2 @@
-# dotnetcore-boilerplate
-ASP.NET WebApi Boilerplate
+# dotnet-core-webapi-boilerplate
+.NET Core WebApi Boilerplate

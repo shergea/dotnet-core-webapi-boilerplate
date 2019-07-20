@@ -1,7 +1,7 @@
 using System;
 namespace WebApi.Model
 {
-    public class User
+    public class User : BaseModel
 
     {
         public Guid Id { get; set; }

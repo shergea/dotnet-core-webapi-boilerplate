@@ -1,7 +1,7 @@
 using System;
 namespace WebApi.Model
 {
-    public class RefreshToken
+    public class RefreshToken : BaseModel
 
     {
         public string Token { get; set; }

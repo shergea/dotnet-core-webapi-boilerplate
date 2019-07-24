@@ -10,8 +10,8 @@ using WebApi.DAL;
 namespace WebApi.DAL.Migrations
 {
     [DbContext(typeof(MsSQLContext))]
-    [Migration("20190719063928_CreateRefreshToken")]
-    partial class CreateRefreshToken
+    [Migration("20190723235923_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,9 +26,13 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("Token")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTimeOffset>("CreatedAt");
+
                     b.Property<DateTime>("ExpiredTime");
 
                     b.Property<DateTime>("IssuedTime");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt");
 
                     b.Property<Guid>("UserId");
 
@@ -42,6 +46,10 @@ namespace WebApi.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTimeOffset>("CreatedAt");
+
+                    b.Property<DateTimeOffset?>("DeletedAt");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
@@ -49,6 +57,8 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("Password");
 
                     b.Property<string>("Surname");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt");
 
                     b.HasKey("Id");
 

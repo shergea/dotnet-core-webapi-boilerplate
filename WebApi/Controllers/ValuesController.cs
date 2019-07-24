@@ -31,10 +31,9 @@ namespace WebApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public System.Collections.Generic.IEnumerable<User> Get(int id)
         {
-            userLogic.GetTest();
-            return "value";
+            return userLogic.GetTest();
         }
 
         // POST api/values
@@ -53,6 +52,7 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            userLogic.Delete();
         }
     }
 }

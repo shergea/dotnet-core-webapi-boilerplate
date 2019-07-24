@@ -11,6 +11,7 @@ namespace WebApi.BLL.Logics.Interfaces
         GetOutputViewModel GetFirst();
         RegisterOutputViewModel Register(RegisterInputViewModel entity);
         User GetById(Guid Id);
-        void GetTest();
+        IEnumerable<User> GetTest();
+        void Delete();
     }
 }

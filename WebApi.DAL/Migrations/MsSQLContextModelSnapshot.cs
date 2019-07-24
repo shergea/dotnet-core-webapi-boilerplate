@@ -24,9 +24,13 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("Token")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTimeOffset>("CreatedAt");
+
                     b.Property<DateTime>("ExpiredTime");
 
                     b.Property<DateTime>("IssuedTime");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt");
 
                     b.Property<Guid>("UserId");
 
@@ -40,6 +44,10 @@ namespace WebApi.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTimeOffset>("CreatedAt");
+
+                    b.Property<DateTimeOffset?>("DeletedAt");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
@@ -47,6 +55,8 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("Password");
 
                     b.Property<string>("Surname");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt");
 
                     b.HasKey("Id");
 

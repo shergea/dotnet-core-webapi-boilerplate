@@ -47,14 +47,24 @@ namespace WebApi.BLL.Logics
             return _unitOfWork.User.GetByIDAsNoTracking(Id);
         }
 
-        public void GetTest()
+        public IEnumerable<User> GetTest()
         {
+            //throw new Exception("Hata oldu aga");
             var task1 = _unitOfWork.RefreshToken.GetAsNoTrackingAsync();
             var task2 = _unitOfWork.User.GetAsNoTrackingAsync();
             Task.WaitAll(task1, task2);
             var result1 = task1.Result;
             var result2 = task2.Result;
-            
+            return result2;
+        }
+
+        public void Delete()
+        {
+            User entity = _unitOfWork.User.Get().First();
+            _unitOfWork.User.Delete(entity);
+            RefreshToken entity2 = _unitOfWork.RefreshToken.Get().First();
+            _unitOfWork.RefreshToken.Delete(entity2);
+            _unitOfWork.Save();
         }
     }
 }

@@ -14,6 +14,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GlobalErrorHandling.Extensions;
 
 namespace WebApi
 {
@@ -32,8 +33,7 @@ namespace WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<IConfiguration>(Configuration);
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MsSQLContext>(options => options.UseSqlServer(connection));
-            services.RegisterUnitOfWorkLayer();
+            services.RegisterUnitOfWorkLayer(connection);
             services.RegisterLogicLayer();
             services.AddAutoMapper(typeof(Startup));
 
@@ -100,6 +100,7 @@ namespace WebApi
             //app.UseHttpsRedirection();
             loggerFactory.AddNLog();
             app.UseAuthentication();
+            app.ConfigureCustomExceptionMiddleware();
             app.UseMvc();
 
             SeedData.Initialize(app.ApplicationServices);

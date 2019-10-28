@@ -17,7 +17,6 @@ namespace WebApi.DAL
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ApplySoftDeletesFilter(modelBuilder);
@@ -79,6 +78,6 @@ namespace WebApi.DAL
                 }
             });
         }
-#endregion
+        #endregion
     }
 }

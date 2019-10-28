@@ -14,7 +14,7 @@ namespace WebApi.Controllers
     {
         private readonly ILogger<ValuesController> _logger;
 
-        public ValuesController(IUserLogic userLogic,ILogger<ValuesController> logger) : base(userLogic)
+        public ValuesController(IUserLogic userLogic, ILogger<ValuesController> logger) : base(userLogic)
         {
             _logger = logger;
         }

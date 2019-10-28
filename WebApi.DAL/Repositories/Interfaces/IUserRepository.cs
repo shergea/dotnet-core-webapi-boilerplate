@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using WebApi.Model;
 
 namespace WebApi.DAL.Repositories.Interfaces

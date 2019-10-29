@@ -31,7 +31,7 @@ namespace WebApi.Controllers
             return _userLogic.Register(login);
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public IEnumerable<User> Get()
         {

@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
 
   <ItemGroup>
-      <ProjectReference Include="..\WebApi.Model\WebApi.Model.csproj" />
-      <ProjectReference Include="..\WebApi.DAL\WebApi.DAL.csproj" />
+    <ProjectReference Include="..\WebApi.Model\WebApi.Model.csproj" />
+    <ProjectReference Include="..\WebApi.DAL\WebApi.DAL.csproj" />
   </ItemGroup>
 
-  
+
 </Project>

@@ -33,12 +33,12 @@ namespace WebApi.DAL.Repositories.Interfaces
         #endregion
         Task<TEntity> GetByIDAsync(object id);
         TEntity GetByID(object id);
-        Task<TEntity> GetByIDAsNoTrackingAsync(object id);
-        TEntity GetByIDAsNoTracking(object id);
+        Task<TEntity> GetByIDAsNoTrackingAsync(object id, int? cacheDuration = null);
+        TEntity GetByIDAsNoTracking(object id, int? cacheDuration = null);
         Task<IEnumerable<TEntity>> GetAsync();
         IEnumerable<TEntity> Get();
-        Task<IEnumerable<TEntity>> GetAsNoTrackingAsync();
-        IEnumerable<TEntity> GetAsNoTracking();
+        Task<IEnumerable<TEntity>> GetAsNoTrackingAsync(int? cacheDuration = null);
+        IEnumerable<TEntity> GetAsNoTracking(int? cacheDuration = null);
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
         void Delete(object id);

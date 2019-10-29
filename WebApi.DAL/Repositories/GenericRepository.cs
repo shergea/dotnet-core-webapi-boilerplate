@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using WebApi.DAL.Repositories.Interfaces;
 
 namespace WebApi.DAL.Repositories
@@ -12,11 +14,13 @@ namespace WebApi.DAL.Repositories
     {
         internal MsSQLContext context;
         internal DbSet<TEntity> dbSet;
+        private IDistributedCache distributedCache;
 
-        public GenericRepository(MsSQLContext context)
+        public GenericRepository(MsSQLContext context, IDistributedCache distributedCache = null)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();
+            this.distributedCache = distributedCache;
         }
         #region Disabled
         /* public virtual IEnumerable<TEntity> Get(
@@ -141,14 +145,41 @@ namespace WebApi.DAL.Repositories
         {
             return dbSet.ToList();
         }
-        public virtual async Task<IEnumerable<TEntity>> GetAsNoTrackingAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAsNoTrackingAsync(int? cacheDuration = null)
         {
             return await dbSet.AsNoTracking().ToListAsync();
         }
 
-        public virtual IEnumerable<TEntity> GetAsNoTracking()
+        public virtual IEnumerable<TEntity> GetAsNoTracking(int? cacheDuration = null)
         {
-            return dbSet.AsNoTracking().ToList();
+            IEnumerable<TEntity> response = null;
+            if (cacheDuration != null)
+            {
+                var data = this.distributedCache.GetString(typeof(TEntity).Name + "æ" + "GetAsNoTracking");
+                if (data != null)
+                {
+                    response = JsonConvert.DeserializeObject<IEnumerable<TEntity>>(data);
+                }
+
+                //Console.WriteLine(typeof(TEntity).Name + "æ" + "GetAsNoTracking" + "   Çağırıldı.");
+                if (response == null)
+                {
+                    var cacheExpirationOptions = new DistributedCacheEntryOptions
+                    {
+                        AbsoluteExpiration = DateTime.Now.AddSeconds(Convert.ToDouble(cacheDuration))
+                    };
+                    response = dbSet.AsNoTracking().ToList();
+
+                    this.distributedCache.SetString(typeof(TEntity).Name + "æ" + "GetAsNoTracking", JsonConvert.SerializeObject(response), cacheExpirationOptions);
+                    //Console.WriteLine(typeof(TEntity) + "æ" + "Get" + "   Set Edildi.");
+                }
+            }
+            else
+            {
+                response = dbSet.AsNoTracking().ToList();
+            }
+
+            return response;
         }
 
         public virtual async Task<TEntity> GetByIDAsync(object id)
@@ -161,14 +192,14 @@ namespace WebApi.DAL.Repositories
             return dbSet.Find(id);
         }
 
-        public virtual async Task<TEntity> GetByIDAsNoTrackingAsync(object id)
+        public virtual async Task<TEntity> GetByIDAsNoTrackingAsync(object id, int? cacheDuration = null)
         {
             var entity = await dbSet.FindAsync(id);
             context.Entry(entity).State = EntityState.Detached;
             return entity;
         }
 
-        public virtual TEntity GetByIDAsNoTracking(object id)
+        public virtual TEntity GetByIDAsNoTracking(object id, int? cacheDuration = null)
         {
             var entity = dbSet.Find(id);
             context.Entry(entity).State = EntityState.Detached;

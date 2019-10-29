@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.Caching.Distributed;
 using WebApi.DAL.Repositories.Interfaces;
 
 namespace WebApi.DAL.Repositories
@@ -6,11 +7,13 @@ namespace WebApi.DAL.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private MsSQLContext context;
-        public UnitOfWork(MsSQLContext _context)
+        private IDistributedCache distributedCache;
+        public UnitOfWork(MsSQLContext _context, IDistributedCache _distributedCache)
         {
             context = _context;
+            distributedCache = _distributedCache;
         }
-        
+
         private UserRepository userRepository;
         private RefreshTokenRepository refreshTokenRepository;
 
@@ -21,7 +24,7 @@ namespace WebApi.DAL.Repositories
 
                 if (this.userRepository == null)
                 {
-                    this.userRepository = new UserRepository(context);
+                    this.userRepository = new UserRepository(context, distributedCache);
                 }
                 return userRepository;
             }

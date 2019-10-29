@@ -1,12 +1,8 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using WebApi.BLL.Logics.Interfaces;
 using WebApi.Model;
 using WebApi.Model.ViewModels.UserController;
@@ -21,7 +17,7 @@ namespace WebApi.Controllers
         private readonly IUserLogic _userLogic;
         private readonly IConfiguration _config;
 
-        public UserController(IUserLogic userLogic, ILogger<ValuesController> logger, IConfiguration config) :base(userLogic)
+        public UserController(IUserLogic userLogic, ILogger<ValuesController> logger, IConfiguration config) : base(userLogic)
         {
             _logger = logger;
             _config = config;
@@ -33,6 +29,13 @@ namespace WebApi.Controllers
         public RegisterOutputViewModel Register([FromBody]RegisterInputViewModel login)
         {
             return _userLogic.Register(login);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IEnumerable<User> Get()
+        {
+            return _userLogic.Get();
         }
 
     }

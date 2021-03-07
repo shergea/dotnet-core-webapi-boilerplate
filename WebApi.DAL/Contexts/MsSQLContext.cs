@@ -46,7 +46,7 @@ namespace WebApi.DAL
 
         private void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class
         {
-            builder.Entity<T>().HasQueryFilter(item => EF.Property<DateTimeOffset>(item, "DeletedAt") == null);
+            builder.Entity<T>().HasQueryFilter(item => EF.Property<Nullable<DateTimeOffset>>(item, "DeletedAt") == null);
         }
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -63,11 +63,15 @@ namespace WebApi.DAL
         private void OnBeforeSaving()
         {
             var addedEntities = ChangeTracker.Entries().Where(e => e.State == EntityState.Added).ToList();
-            addedEntities.ForEach(e => { e.Property("CreatedAt").CurrentValue = DateTimeOffset.Now; });
-
+            addedEntities.ForEach(e =>
+            {
+                if (e.Metadata.FindProperty("CreatedAt") != null) e.Property("CreatedAt").CurrentValue = DateTimeOffset.Now;
+            });
             var editedEntities = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified).ToList();
-            editedEntities.ForEach(e => { e.Property("UpdatedAt").CurrentValue = DateTimeOffset.Now; });
-
+            editedEntities.ForEach(e =>
+            {
+                if (e.Metadata.FindProperty("UpdatedAt") != null) e.Property("UpdatedAt").CurrentValue = DateTimeOffset.Now;
+            });
             var deletedEntities = ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted).ToList();
             deletedEntities.ForEach(e =>
             {

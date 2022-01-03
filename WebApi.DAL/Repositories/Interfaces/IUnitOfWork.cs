@@ -1,5 +1,3 @@
-using System;
-
 namespace WebApi.DAL.Repositories.Interfaces
 {
     public interface IUnitOfWork : IDisposable

@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore;
 using NLog.Web;
 
 namespace WebApi

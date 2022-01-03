@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.BLL.Logics.Interfaces;
 using WebApi.Model;
@@ -35,7 +30,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult CreateToken([FromBody]PostLoginInputViewModel login)
+        public IActionResult CreateToken([FromBody] PostLoginInputViewModel login)
         {
             IActionResult response = Unauthorized();
             var user = _authLogic.Authenticate(login);
@@ -76,7 +71,7 @@ namespace WebApi.Controllers
 
         private string BuildToken(User user = null, IEnumerable<Claim> claims = null)
         {
-            IEnumerable<Claim> _claims=null;
+            IEnumerable<Claim> _claims = null;
             if (user != null)
             {
                 _claims = new[] {

@@ -1,15 +1,6 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Logics.Interfaces;
 using WebApi.Model;
-using WebApi.Model.ViewModels.UserController;
 
 namespace WebApi.Controllers
 {
@@ -35,7 +26,8 @@ namespace WebApi.Controllers
             get
             {
                 var user = HttpContext.User;
-                if(user!=null){
+                if (user != null)
+                {
                     Guid id = new Guid(user.FindFirst("UserId").Value.ToString());
                     return _userLogic.GetById(id);
                 }

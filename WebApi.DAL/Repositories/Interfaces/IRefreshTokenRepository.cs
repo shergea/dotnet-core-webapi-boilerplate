@@ -1,4 +1,3 @@
-using System;
 using WebApi.Model;
 
 namespace WebApi.DAL.Repositories.Interfaces

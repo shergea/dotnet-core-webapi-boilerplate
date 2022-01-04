@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using WebApi.BLL.Logics.Interfaces;
 using WebApi.Model;
 using WebApi.Model.ViewModels.UserController;
@@ -26,7 +23,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public RegisterOutputViewModel Register([FromBody]RegisterInputViewModel login)
+        public RegisterOutputViewModel Register([FromBody] RegisterInputViewModel login)
         {
             return _userLogic.Register(login);
         }

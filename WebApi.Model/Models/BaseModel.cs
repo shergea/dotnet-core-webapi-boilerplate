@@ -1,4 +1,3 @@
-using System;
 namespace WebApi.Model
 {
     public class BaseModel

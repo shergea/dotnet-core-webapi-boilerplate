@@ -1,4 +1,3 @@
-using System;
 using WebApi.Model.Interfaces;
 
 namespace WebApi.Model

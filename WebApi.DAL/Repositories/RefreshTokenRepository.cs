@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using WebApi.DAL.Repositories.Interfaces;
 using WebApi.Model;
 

@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using WebApi.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using GlobalErrorHandling.Extensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
 
@@ -31,7 +22,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc();
             services.AddSingleton<IConfiguration>(Configuration);
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.RegisterUnitOfWorkLayer(connection);
@@ -109,7 +100,7 @@ namespace WebApi
                 endpoints.MapControllers();
             });
             app.ConfigureCustomExceptionMiddleware();
-            
+
 
             SeedData.Initialize(app.ApplicationServices);
         }

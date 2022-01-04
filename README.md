@@ -1,4 +1,4 @@
-# RESTful API .Net 5.0 Boilerplate
+# RESTful API .Net 6.0 Boilerplate
 A boilerplate/starter project for quickly building RESTful APIs using .Net 5.0 with Entity Framework.
 
 # Quick Start
